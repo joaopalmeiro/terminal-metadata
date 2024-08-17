@@ -1,0 +1,165 @@
+# Notes
+
+- https://github.com/joaopalmeiro/template-python-uv-script
+- Screenshot app: [Screenshot (macOS)](https://support.apple.com/en-gb/guide/mac-help/mh26782/10.15/mac/10.15)
+- [is-unicode-supported](https://github.com/sindresorhus/is-unicode-supported)
+- `TERM_PROGRAM`, `TERM_PROGRAM_VERSION`, and `TERM` environment variables.
+- [Support TERM_PROGRAM environment variables](https://github.com/mintty/mintty/issues/776) issue
+- Table:
+  - The `OS` column corresponds to the operating system where the script was run.
+  - `-` represents the default value for _undefined_ environment variables.
+- Hyper [themes](https://hyper.is/themes)
+- Terminals or terminal emulators
+- Warp [issues](https://github.com/warpdotdev/warp/issues)
+- [CleanShot X](https://cleanshot.com/) (available via [Setapp](https://setapp.com/apps/cleanshot))
+- [ZSH: Hide computer name in terminal](https://stackoverflow.com/a/59944342). `sudo code /private/etc/zshrc` + `%n@%m` -> `%n` (`PS1`). It works for Terminal (macOS).
+- https://pypi.org/project/python-rapidjson/
+- https://github.com/python-rapidjson/python-rapidjson
+
+## Commands
+
+```bash
+pip config unset global.require-virtualenv
+```
+
+```bash
+deactivate && uv venv .venv && source .venv/bin/activate && uv pip install -r requirements.txt
+```
+
+```bash
+uv venv .venv && source .venv/bin/activate && uv pip install -r requirements.txt
+```
+
+### Clean slate
+
+```bash
+rm -rf .mypy_cache/ .ruff_cache/ .venv/
+```
+
+## Snippets
+
+### `terminals/cheese.py` file
+
+```python
+if __name__ == "__main__":
+    # https://en.wikipedia.org/wiki/Say_cheese
+
+    # `cp cheese.py ~` + `python cheese.py`
+    # Use Rectangle (https://rectangleapp.com/)
+    # to scale the terminal window to "Top Center Sixth"
+
+    print("✨ 📸 ✨")
+```
+
+### `terminals/script.py` file
+
+```python
+import os
+import platform
+from datetime import datetime, timezone
+from pathlib import Path
+
+from pytablewriter import MarkdownTableWriter
+from pytablewriter.typehint import String
+from rapidjson import DM_ISO8601, WM_PRETTY, dump, load
+
+DEFAULT_CELL_VALUE: str = "-"
+TERM_VAR: str = "TERM"
+TERM_PROGRAM_VAR: str = "TERM_PROGRAM"
+TERM_PROGRAM_VERSION_VAR: str = "TERM_PROGRAM_VERSION"
+
+
+def link(text: str, url: str) -> str:
+    # More info: https://commonmark.org/help/
+    return f"[{text}]({url})"
+
+
+if __name__ == "__main__":
+    term = os.getenv(TERM_VAR, DEFAULT_CELL_VALUE)
+    term_program = os.getenv(TERM_PROGRAM_VAR, DEFAULT_CELL_VALUE)
+    term_program_version = os.getenv(TERM_PROGRAM_VERSION_VAR, DEFAULT_CELL_VALUE)
+    # More info: https://docs.python.org/3.8/library/platform.html#platform.platform
+    my_os = platform.platform(terse=True)
+
+    # More info:
+    # - https://pytablewriter.readthedocs.io/en/latest/pages/reference/writers/text/markup/md.html
+    # - https://pytablewriter.readthedocs.io/en/latest/pages/examples/table_format/text/markdown.html#example-markdown-table-writer
+    # - https://pytablewriter.readthedocs.io/en/latest/pages/examples/typehint/python.html#example-type-hint-python
+    # - https://pytablewriter.readthedocs.io/en/latest/pages/examples/output/dump/index.html
+    writer = MarkdownTableWriter(
+        headers=[
+            "Terminal",
+            TERM_VAR,
+            TERM_PROGRAM_VAR,
+            TERM_PROGRAM_VERSION_VAR,
+            "OS",
+        ],
+        value_matrix=[["[]()", term, term_program, term_program_version, my_os]],
+        type_hints=[String, String, String, String, String],
+        margin=1,
+        flavor="github",
+    )
+
+    # print(dir(writer))
+    # print(writer._MarkdownTableWriter__flavor)
+
+    # writer.write_table()
+    output: str = writer.dumps()
+    print(output)
+
+    # https://python-rapidjson.readthedocs.io/en/latest/quickstart.html
+    # https://python-rapidjson.readthedocs.io/en/latest/dump.html
+    # https://python-rapidjson.readthedocs.io/en/latest/load.html
+    # https://python-rapidjson.readthedocs.io/en/latest/api.html
+    # https://realpython.com/python-json/
+    datum = {
+        "terminal": "",
+        TERM_VAR: term,
+        TERM_PROGRAM_VAR: term_program,
+        TERM_PROGRAM_VERSION_VAR: term_program_version,
+        "os": my_os,
+        "timestamp": datetime.now(timezone.utc),
+    }
+
+    with open(Path("./data.json"), "r") as fp:
+        data = load(fp, datetime_mode=DM_ISO8601)
+        # print(data, type(data))
+
+    with open(Path("./data.json"), "w") as fp:
+        dump(
+            data + [datum],
+            fp,
+            ensure_ascii=False,
+            write_mode=WM_PRETTY,
+            indent=2,
+            sort_keys=False,
+            datetime_mode=DM_ISO8601,
+        )
+```
+
+### `terminals/Pipfile`
+
+```toml
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pytablewriter = "*"
+python-rapidjson = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
+```
+
+```markdown
+## Development
+
+- `pipenv install --python 3.8`.
+- `pipenv shell`.
+- Run this script via the desired terminal: `python script.py`.
+- `python cheese.py`.
+```
