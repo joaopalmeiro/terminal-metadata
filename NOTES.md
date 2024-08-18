@@ -53,6 +53,12 @@ uv venv .venv && source .venv/bin/activate && uv pip install -r requirements.txt
 rm -rf .mypy_cache/ .ruff_cache/ .venv/
 ```
 
+### Add a new terminal
+
+```bash
+source .venv/bin/activate && python 01.py && deactivate
+```
+
 ### List all environment variables
 
 ```bash
