@@ -28,6 +28,10 @@
 - https://docs.warp.dev/help/known-issues#configuring-and-debugging-your-rc-files: `$TERM_PROGRAM != "WarpTerminal"`
 - https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops:
   - "In either kind of loop, the `else` clause is not executed if the loop was terminated by a `break`."
+- https://docs.python.org/3.10/library/typing.html#typing.TypeVar
+- https://mypy.readthedocs.io/en/stable/generics.html#generic-functions
+- https://docs.python.org/3/library/typing.html#generics: "Changed in version 3.12: Syntactic support for generics is new in Python 3.12."
+- https://docs.python.org/3.10/library/typing.html#typing.Callable
 
 ## Commands
 
@@ -56,6 +60,21 @@ printenv
 ```
 
 ## Snippets
+
+```python
+from typing import TypeVar, Callable
+
+T = TypeVar('T')
+
+def replace_or_append(values: list[T], new_value: T, compare: Callable[[T, T], bool]) -> list[T]:
+    for i, value in enumerate(values):
+        if compare(value, new_value):
+            values[i] = new_value
+            return values
+
+    values.append(new_value)
+    return values
+```
 
 ### `terminals/cheese.py` file
 

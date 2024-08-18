@@ -1,10 +1,35 @@
 import os
 import platform
+from collections.abc import Callable
 from pathlib import Path
+from typing import TypeVar
 
 from gaveta.json import ensure_json, read_json, write_json
 
 DATA = Path("data") / "terminals.json"
+
+T = TypeVar("T")
+
+
+def replace_or_append(
+    values: list[T], new_value: T, key: Callable[[T, T], bool]
+) -> list[T]:
+    for index, value in enumerate(values):
+        if key(value, new_value):
+            values[index] = new_value
+            break
+    else:
+        values.append(new_value)
+
+    return values
+
+
+def compare_terminals(terminal, new_terminal) -> bool:
+    return (
+        terminal["TERM_PROGRAM"] == new_terminal["TERM_PROGRAM"]
+        and terminal["os"] == new_terminal["os"]
+    )
+
 
 if __name__ == "__main__":
     ensure_json(DATA)
@@ -18,14 +43,6 @@ if __name__ == "__main__":
         "os": platform.platform(aliased=False, terse=False),
     }
 
-    for index, terminal in enumerate(terminal_data):
-        if (
-            terminal["TERM_PROGRAM"] == new_terminal["TERM_PROGRAM"]
-            and terminal["os"] == new_terminal["os"]
-        ):
-            terminal_data[index] = new_terminal
-            break
-    else:
-        terminal_data.append(new_terminal)
+    terminal_data = replace_or_append(terminal_data, new_terminal, compare_terminals)
 
     write_json(terminal_data, DATA)
