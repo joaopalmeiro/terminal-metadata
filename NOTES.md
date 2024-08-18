@@ -56,13 +56,31 @@ rm -rf .mypy_cache/ .ruff_cache/ .venv/
 ### Add a new terminal
 
 ```bash
-source .venv/bin/activate && python 01.py && deactivate
+cd ~/Documents/GitHub/terminal-metadata && source .venv/bin/activate && python 01.py && deactivate
 ```
 
 ### List all environment variables
 
 ```bash
 printenv
+```
+
+### Alacritty
+
+- https://alacritty.org/
+- https://formulae.brew.sh/cask/alacritty
+- https://github.com/alacritty/alacritty/issues/4673#issuecomment-771291615
+
+```bash
+brew update
+```
+
+```bash
+brew install --cask alacritty --no-quarantine
+```
+
+```bash
+brew uninstall --cask alacritty
 ```
 
 ## Snippets
