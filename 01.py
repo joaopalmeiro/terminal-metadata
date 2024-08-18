@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     for index, terminal in enumerate(terminal_data):
         if (
-            terminal["TERM"] == new_terminal["TERM"]
+            terminal["TERM_PROGRAM"] == new_terminal["TERM_PROGRAM"]
             and terminal["os"] == new_terminal["os"]
         ):
             terminal_data[index] = new_terminal
