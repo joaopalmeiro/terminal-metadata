@@ -15,6 +15,19 @@
 - [ZSH: Hide computer name in terminal](https://stackoverflow.com/a/59944342). `sudo code /private/etc/zshrc` + `%n@%m` -> `%n` (`PS1`). It works for Terminal (macOS).
 - https://pypi.org/project/python-rapidjson/
 - https://github.com/python-rapidjson/python-rapidjson
+- https://docs.python.org/3.10/library/platform.html#platform.platform
+- https://stackoverflow.com/questions/70574208/get-the-name-of-the-current-opened-application-in-python
+- https://github.com/giampaolo/psutil/issues/173
+- https://docs.python.org/3/library/os.html#os.getpid
+- https://stackoverflow.com/questions/55349853/how-to-find-shell-environment-variable
+- https://cli.r-lib.org/reference/num_ansi_colors.html:
+  - "If the `COLORTERM` environment variable is set to `truecolor` or `24bit`, then we return 16 million colors."
+  - https://cli.r-lib.org/articles/cli-config-internal.html#colorterm
+  - https://cli.r-lib.org/articles/cli-config-internal.html#term
+- https://github.com/vercel/hyper/blob/2a7bb18259d975f27b30b502af1be7576f6f5656/app/session.ts#L123-L131: `TERM`, `COLORTERM`, `TERM_PROGRAM`, and `TERM_PROGRAM_VERSION`
+- https://docs.warp.dev/help/known-issues#configuring-and-debugging-your-rc-files: `$TERM_PROGRAM != "WarpTerminal"`
+- https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops:
+  - "In either kind of loop, the `else` clause is not executed if the loop was terminated by a `break`."
 
 ## Commands
 
@@ -34,6 +47,12 @@ uv venv .venv && source .venv/bin/activate && uv pip install -r requirements.txt
 
 ```bash
 rm -rf .mypy_cache/ .ruff_cache/ .venv/
+```
+
+### List all environment variables
+
+```bash
+printenv
 ```
 
 ## Snippets
