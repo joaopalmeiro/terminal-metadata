@@ -32,6 +32,8 @@
 - https://mypy.readthedocs.io/en/stable/generics.html#generic-functions
 - https://docs.python.org/3/library/typing.html#generics: "Changed in version 3.12: Syntactic support for generics is new in Python 3.12."
 - https://docs.python.org/3.10/library/typing.html#typing.Callable
+- https://www.nushell.sh/book/default_shell.html#setting-nu-as-default-shell-on-your-terminal
+- https://github.com/cdleon/awesome-terminals
 
 ## Commands
 
@@ -81,6 +83,39 @@ brew install --cask alacritty --no-quarantine
 
 ```bash
 brew uninstall --cask alacritty
+```
+
+### Nushell
+
+- https://www.nushell.sh/
+
+```bash
+brew update
+```
+
+```bash
+brew install nushell
+```
+
+```bash
+brew uninstall nushell
+```
+
+### Hyper
+
+- https://github.com/vercel/hyper?tab=readme-ov-file#macos
+- https://formulae.brew.sh/cask/hyper
+
+```bash
+brew update
+```
+
+```bash
+brew install --cask hyper
+```
+
+```bash
+brew uninstall --cask hyper
 ```
 
 ## Snippets
