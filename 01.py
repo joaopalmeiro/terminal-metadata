@@ -1,27 +1,11 @@
 import os
 import platform
-from collections.abc import Callable
 from pathlib import Path
-from typing import TypeVar
 
 from gaveta.json import ensure_json, read_json, write_json
+from gaveta.seq import replace_or_append
 
 DATA = Path("data") / "terminals.json"
-
-T = TypeVar("T")
-
-
-def replace_or_append(
-    values: list[T], new_value: T, key: Callable[[T, T], bool]
-) -> list[T]:
-    for index, value in enumerate(values):
-        if key(value, new_value):
-            values[index] = new_value
-            break
-    else:
-        values.append(new_value)
-
-    return values
 
 
 def compare_terminals(terminal, new_terminal) -> bool:
