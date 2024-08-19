@@ -118,6 +118,23 @@ brew install --cask hyper
 brew uninstall --cask hyper
 ```
 
+### iTerm2
+
+- https://iterm2.com/
+- https://formulae.brew.sh/cask/iterm2
+
+```bash
+brew update
+```
+
+```bash
+brew install --cask iterm2
+```
+
+```bash
+brew uninstall --cask iterm2
+```
+
 ## Snippets
 
 ```python
