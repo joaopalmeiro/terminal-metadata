@@ -152,6 +152,22 @@ brew install --cask tabby
 brew uninstall --cask tabby
 ```
 
+### Wave
+
+- https://github.com/wavetermdev/waveterm?tab=readme-ov-file#installation
+
+```bash
+brew update
+```
+
+```bash
+brew install --cask wave
+```
+
+```bash
+brew uninstall --cask wave
+```
+
 ## Snippets
 
 ```python
