@@ -135,6 +135,23 @@ brew install --cask iterm2
 brew uninstall --cask iterm2
 ```
 
+### Tabby
+
+- https://tabby.sh/
+- https://formulae.brew.sh/cask/tabby
+
+```bash
+brew update
+```
+
+```bash
+brew install --cask tabby
+```
+
+```bash
+brew uninstall --cask tabby
+```
+
 ## Snippets
 
 ```python
